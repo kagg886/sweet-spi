@@ -1,14 +1,12 @@
 /*
- * Copyright (c) 2024 Oleg Yukhnevich. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright (c) 2024-2025 Oleg Yukhnevich. Use of this source code is governed by the Apache 2.0 license.
  */
 
 @file:Suppress("UnstableApiUsage", "HasPlatformType")
 
-import org.jetbrains.kotlin.gradle.*
 import sweetbuild.*
 
 plugins {
-    `jvm-test-suite`
     id("sweetbuild.kotlin-base")
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.plugin.powerAssert)
@@ -22,9 +20,9 @@ kotlin {
 }
 
 dependencies {
-    api(gradleTestKit())
-    api(kotlin("test-junit5"))
-    api(libs.junit.params)
+    testImplementation(gradleTestKit())
+    testImplementation(kotlin("test-junit5"))
+    testImplementation(libs.junit.params)
 }
 
 // Dev artifacts for tests resolution - inspired by https://github.com/adamko-dev/dev-publish-plugin
@@ -43,52 +41,20 @@ dependencies {
     devArtifacts(projects.sweetspiGradlePlugin)
 }
 
-@OptIn(ExperimentalKotlinGradlePluginApi::class)
-powerAssert {
-    includedSourceSets.addAll(
-        "testRuntime",
-        "testProcessor",
-        "testPlugin"
+tasks.test {
+    useJUnitPlatform()
+    jvmArgumentProviders.add(
+        TestsArgumentProvider(
+            devArtifactsDirectories = devArtifactsResolver.incoming.files,
+            testKitDirectory = layout.buildDirectory.dir("test-kit"),
+            projectVersion = provider { project.version.toString() }
+        )
     )
-}
-
-testing.suites {
-    register<JvmTestSuite>("testRuntime")
-    register<JvmTestSuite>("testProcessor")
-    register<JvmTestSuite>("testPlugin")
-
-    withType<JvmTestSuite>().configureEach {
-        useJUnitJupiter()
-        dependencies {
-            implementation(project())
-        }
-        targets.configureEach {
-            this.testTask.configure {
-                jvmArgumentProviders.add(
-                    TestsArgumentProvider(
-                        devArtifactsDirectories = devArtifactsResolver.incoming.files,
-                        testKitDirectory = layout.buildDirectory.dir("test-kit"),
-                        kotlinVersion = libs.versions.kotlin.asProvider(),
-                        kspVersion = libs.versions.ksp,
-                        projectVersion = provider { project.version.toString() }
-                    )
-                )
-            }
-        }
-    }
-}
-
-tasks.check {
-    dependsOn(testing.suites)
 }
 
 class TestsArgumentProvider(
     private val devArtifactsDirectories: FileCollection,
     private val testKitDirectory: Provider<Directory>,
-    @get:Input
-    val kotlinVersion: Provider<String>,
-    @get:Input
-    val kspVersion: Provider<String>,
     @get:Input
     val projectVersion: Provider<String>,
 ) : CommandLineArgumentProvider {
@@ -118,8 +84,5 @@ class TestsArgumentProvider(
         "-Dorg.gradle.testkit.dir=${testKitDirectoryPath.get()}",
         "-Dsweettests.dev-artifacts-directories=${devArtifactsDirectoriesList.get()}",
         "-Dsweettests.dev-artifacts-version=${projectVersion.get()}",
-        "-Dsweettests.gradle-version=${GradleVersion.current().version}",
-        "-Dsweettests.kotlin-version=${kotlinVersion.get()}",
-        "-Dsweettests.ksp-version=${kspVersion.get()}",
     )
 }

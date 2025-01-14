@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Oleg Yukhnevich. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright (c) 2024-2025 Oleg Yukhnevich. Use of this source code is governed by the Apache 2.0 license.
  */
 
 package dev.whyoleg.sweetspi.processor
@@ -15,8 +15,9 @@ private val KCLASS = ClassName("kotlin.reflect", "KClass").parameterizedBy(STAR)
 
 fun generate(codeGenerator: CodeGenerator, platform: PlatformInfo, context: SweetContext) {
     // KSP doesn't support Wasm platform info
-    val isJs = platform.toString() == "JS"
-    val isWasm = platform.toString() == "Wasm"
+    val isJs = platform.toString().lowercase().startsWith("js")
+    // handles both wasm-js and wasm-wasi targets
+    val isWasm = platform.toString().lowercase().startsWith("wasm")
     val isNative = platform is NativePlatformInfo
     val isJvm = platform is JvmPlatformInfo
     val moduleName = context.packageName.replace(".", "_")

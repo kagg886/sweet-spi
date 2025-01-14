@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Oleg Yukhnevich. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright (c) 2024-2025 Oleg Yukhnevich. Use of this source code is governed by the Apache 2.0 license.
  */
 
 import org.jetbrains.kotlin.gradle.dsl.*
@@ -13,7 +13,7 @@ plugins {
 @Suppress("UnstableApiUsage")
 plugins.withType<KotlinBasePluginWrapper>().configureEach {
     extensions.configure<KotlinProjectExtension>("kotlin") {
-        val javaToolchains = extensions.getByName<JavaToolchainService>("javaToolchains")
+        val javaToolchains = project.extensions.getByName<JavaToolchainService>("javaToolchains")
 
         val jdkToolchainVersion = 8
         val jdkTestVersions = setOf(11, 17, 21)
@@ -30,7 +30,7 @@ plugins.withType<KotlinBasePluginWrapper>().configureEach {
             is KotlinJvmProjectExtension    -> {
                 jvmToolchain(jdkToolchainVersion)
                 plugins.apply("org.gradle.jvm-test-suite")
-                extensions.configure<TestingExtension>("testing") {
+                project.extensions.configure<TestingExtension>("testing") {
                     val test by suites.getting(JvmTestSuite::class) {
                         jdkTestVersions.forEach { jdkTestVersion ->
                             targets.register("test${jdkTestVersion}") {
