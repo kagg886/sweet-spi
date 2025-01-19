@@ -53,7 +53,7 @@ Documentation can be found here, or on the website:
 
 ## Using in your projects
 
-Compatible with Kotlin 2.0.0 and 2.0.10 and KSP 2.0.0-1.0.24+.
+Compatible with Kotlin 2.0.0+ (tested up to including 2.1.20-Beta1) and KSP 1.0.24+.
 KSP2 is not supported because of [KSP#1823](https://github.com/google/ksp/issues/1823)
 Using other Kotlin/KSP versions should still work but is not tested.
 
@@ -69,7 +69,7 @@ plugins {
     // apply KSP, don't worry, Gradle Plugin will warn if you've forgotten 
     id("com.google.devtools.ksp") version "2.0.0-1.0.24"
     // finally, apply `sweetspi` Gradle Plugin 
-    id("dev.whyoleg.sweetspi") version "0.1.1"
+    id("dev.whyoleg.sweetspi") version "0.1.2"
 }
 
 kotlin {
@@ -125,7 +125,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             // add runtime
-            implementation("dev.whyoleg.sweetspi:sweetspi-runtime:0.1.1")
+            implementation("dev.whyoleg.sweetspi:sweetspi-runtime:0.1.2")
         }
     }
 }
@@ -134,15 +134,15 @@ dependencies {
     // Note: `ksp` configuration should be used only for jvm projects
     // it's deprecated and will be removed in KSP 2.0
     // https://kotlinlang.org/docs/ksp-multiplatform.html#avoid-the-ksp-configuration-on-ksp-1-0-1
-    ksp("dev.whyoleg.sweetspi:sweetspi-processor:0.1.1")
+    ksp("dev.whyoleg.sweetspi:sweetspi-processor:0.1.2")
 
     // the correct way will be to apply to each target individually, 
     // Note: no need to add it to the `common` compilations, as it'd do nothing there
-    add("kspJvm", "dev.whyoleg.sweetspi:sweetspi-processor:0.1.1")
+    add("kspJvm", "dev.whyoleg.sweetspi:sweetspi-processor:0.1.2")
     // if needed, `test` source sets support
-    add("kspJvmTest", "dev.whyoleg.sweetspi:sweetspi-processor:0.1.1")
+    add("kspJvmTest", "dev.whyoleg.sweetspi:sweetspi-processor:0.1.2")
     // and for each other Kotlin target...
-    add("kspLinuxX64Test", "dev.whyoleg.sweetspi:sweetspi-processor:0.1.1")
+    add("kspLinuxX64Test", "dev.whyoleg.sweetspi:sweetspi-processor:0.1.2")
 }
 ```
 
