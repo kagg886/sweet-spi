@@ -4,16 +4,16 @@ kotlin = "2.0.0"
 ksp = "2.0.0-1.0.24"
 
 # kotlin/kotlinx
-kotlin-dokka = "1.9.20"
-kotlinx-bcv = "0.16.3"
-kotlinx-kover = "0.8.3"
+kotlin-dokka = "2.0.0"
+kotlinx-bcv = "0.17.0"
+kotlinx-kover = "0.9.1"
 
-kotlinpoet = "1.18.1"
-junit = "5.10.3"
+kotlinpoet = "2.0.0"
+junit = "5.11.4"
 
 # gradle/build
-maven-publish = "0.29.0"
-gradle-publish = "1.2.1"
+maven-publish = "0.30.0"
+gradle-publish = "1.3.0"
 
 [libraries]
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
