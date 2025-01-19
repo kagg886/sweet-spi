@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.1.2
+
+> Published 19 Jan 2025
+
+* Fix wasm compatibility with the newest Kotlin versions ([#5](https://github.com/whyoleg/sweet-spi/issues/5))
+
 ## 0.1.1
 
 > Published 14 Aug 2024
