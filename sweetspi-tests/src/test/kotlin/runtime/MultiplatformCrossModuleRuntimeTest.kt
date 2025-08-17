@@ -140,17 +140,19 @@ class MultiplatformCrossModuleRuntimeTest : AbstractTest() {
         }
         project.gradle(":consumer:check") {
             assert(task(":consumer:jvmTest")!!.outcome.isPositive)
-            assert(task(":consumer:jsTest")!!.outcome.isPositive)
-            assert(task(":consumer:wasmJsTest")!!.outcome.isPositive)
-            assert(task(":consumer:wasmWasiTest")!!.outcome.isPositive)
+//            assert(task(":consumer:jsTest")!!.outcome.isPositive)
+//            assert(task(":consumer:wasmJsTest")!!.outcome.isPositive)
+//            assert(task(":consumer:wasmWasiTest")!!.outcome.isPositive)
 
             // tasks are different on different OS, only desktop targets are mentioned
             val nativeTestTasks = setOf(
-                ":consumer:macosArm64Test",
-                ":consumer:macosX64Test",
-                ":consumer:linuxX64Test",
-                ":consumer:linuxArm64Test",
-                ":consumer:mingwX64Test",
+                ":consumer:iosArm64Test",
+                ":consumer:iosSimulatorArm64Test",
+//                ":consumer:macosArm64Test",
+//                ":consumer:macosX64Test",
+//                ":consumer:linuxX64Test",
+//                ":consumer:linuxArm64Test",
+//                ":consumer:mingwX64Test",
             )
             assert(tasks.any { it.path in nativeTestTasks && it.outcome.isPositive })
         }

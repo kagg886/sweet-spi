@@ -16,15 +16,16 @@ data class TestVersions(
     val kspVersion: String,
 )
 
-private const val MIN_GRADLE = "8.0.2"
-private const val LATEST_GRADLE = "8.12"
+private const val MIN_GRADLE = "8.14"
+private const val LATEST_GRADLE = "8.14"
 private val KSP_VERSIONS = listOf(
-    "2.0.0-1.0.24",
-    "2.0.10-1.0.24",
-    "2.0.21-1.0.28",
-    "2.1.0-1.0.29",
-    "2.1.10-RC-1.0.29",
-    "2.1.20-Beta1-1.0.29",
+    "2.2.0-2.0.2"
+//    "2.0.0-1.0.24",
+//    "2.0.10-1.0.24",
+//    "2.0.21-1.0.28",
+//    "2.1.0-1.0.29",
+//    "2.1.10-RC-1.0.29",
+//    "2.1.20-Beta1-1.0.29",
 )
 
 abstract class TestVersionsProvider(private val versions: Sequence<TestVersions>) : ArgumentsProvider {

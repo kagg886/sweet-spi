@@ -21,8 +21,8 @@ kotlin {
     explicitApi()
     compilerOptions {
         // gradle 8+
-        languageVersion.set(KotlinVersion.KOTLIN_1_8)
-        apiVersion.set(KotlinVersion.KOTLIN_1_8)
+        languageVersion.set(KotlinVersion.KOTLIN_2_2)
+        apiVersion.set(KotlinVersion.KOTLIN_2_2)
         // progressiveMode works only for latest kotlin version
         progressiveMode.set(false)
     }

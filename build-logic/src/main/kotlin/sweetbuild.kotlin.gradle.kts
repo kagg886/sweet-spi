@@ -15,7 +15,7 @@ plugins.withType<KotlinBasePluginWrapper>().configureEach {
     extensions.configure<KotlinProjectExtension>("kotlin") {
         val javaToolchains = project.extensions.getByName<JavaToolchainService>("javaToolchains")
 
-        val jdkToolchainVersion = 8
+        val jdkToolchainVersion = 17
         val jdkTestVersions = setOf(11, 17, 21)
 
         fun TaskProvider<out Test>.jvmToolchain(jdkVersion: Int) {
